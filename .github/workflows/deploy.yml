@@ -30,6 +30,17 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    - name: Set up environment variables
+      run: |
+        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+        echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
+        echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
+        echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> $GITHUB_ENV
+        echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> $GITHUB_ENV
+        echo "JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }}" >> $GITHUB_ENV
+        echo "S3_ACCESSKEY=${{ secrets.S3_ACCESSKEY }}" >> $GITHUB_ENV
+        echo "S3_SECRETKEY=${{ secrets.S3_SECRETKEY }}" >> $GITHUB_ENV
+
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
