@@ -30,8 +30,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-# 추가
- 
+      # 추가
+    - name: Copy gradlew script to EC2
+      run: |
+        scp -i ~/.ssh/your-ec2-key.pem ./gradlew ubuntu@13.125.33.250:/home/ubuntu/app/
+        ssh -i ~/.ssh/your-ec2-key.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+
         
     - name: Set up environment variables
       run: |
