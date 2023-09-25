@@ -33,15 +33,15 @@ jobs:
     # PEM 파일을 GitHub Action Workspace로 복사
     - name: Setup SSH Key
       run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > deploy_key.pem
-        chmod 600 deploy_key.pem
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > dCICD.pem
+        chmod 600 dCICD.pem
 
     
       # 추가
     - name: Copy gradlew script to EC2
       run: |
-        scp -i ~/.ssh/dCICD.pem ./gradlew ubuntu@13.125.33.250:/home/ubuntu/app/
-        ssh -i /c/Users/JH/.ssh/dCICD.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
+        scp -i dCICD.pem ./gradlew ubuntu@13.125.33.250:/home/ubuntu/app/
+        ssh -i dCICD.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
