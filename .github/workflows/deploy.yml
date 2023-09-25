@@ -30,6 +30,13 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
+    # PEM 파일을 GitHub Action Workspace로 복사
+    - name: Setup SSH Key
+      run: |
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > deploy_key.pem
+        chmod 600 deploy_key.pem
+
+    
       # 추가
     - name: Copy gradlew script to EC2
       run: |
