@@ -45,6 +45,8 @@ jobs:
     #   env:
     #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
+    - name: Build with Gradle
+      run: gradle clean build -x test
         
     - name: Set up environment variables
       run: |
