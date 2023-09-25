@@ -45,9 +45,7 @@ jobs:
     #   env:
     #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
-    - name: Build with Gradle
-      run: gradle clean build -x test
-        
+   
     - name: Set up environment variables
       run: |
         echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
@@ -59,10 +57,15 @@ jobs:
         echo "S3_ACCESSKEY=${{ secrets.S3_ACCESSKEY }}" >> $GITHUB_ENV
         echo "S3_SECRETKEY=${{ secrets.S3_SECRETKEY }}" >> $GITHUB_ENV
 
+
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: clean build -x test
+      run: gradle clean build -x test
+
+        
+    # - name: Build with Gradle
+    #   uses: gradle/gradle-build-action@v2
+    #   with:
+    #     arguments: clean build -x test
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
