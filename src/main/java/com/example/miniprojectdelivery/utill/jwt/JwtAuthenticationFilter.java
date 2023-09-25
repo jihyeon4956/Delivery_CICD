@@ -3,8 +3,6 @@ package com.example.miniprojectdelivery.utill.jwt;
 import com.example.miniprojectdelivery.dto.user.LoginRequestDto;
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.enums.UserRoleEnum;
-import com.example.miniprojectdelivery.repository.RedisRepository;
-import com.example.miniprojectdelivery.service.RefreshTokenService;
 import com.example.miniprojectdelivery.utill.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
@@ -24,12 +22,10 @@ import java.io.PrintWriter;
 //authfilter,loggingfilter 대신 편리하게 사용
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
-    private final RefreshTokenService refreshTokenService;
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, RefreshTokenService refreshTokenService) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        this.refreshTokenService = refreshTokenService;
         setFilterProcessesUrl("/api/auth/login");
     }
 
@@ -63,10 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         UserRoleEnum role = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRole();
 
-
         String token = jwtUtil.createToken(username, role);
-        String refreshToken = refreshTokenService.createRefreshToken(username ,role);
-        jwtUtil.addJwtToCookie(token,refreshToken, response);
+        jwtUtil.addJwtToCookie(token, response);
 
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
     }

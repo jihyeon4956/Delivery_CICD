@@ -3,14 +3,12 @@ package com.example.miniprojectdelivery.dto.menu;
 import com.example.miniprojectdelivery.model.Menu;
 import lombok.Getter;
 
-import java.net.URL;
-
 
 @Getter
 public class MenuResponseDto {
     public Long id;
     private Long restaurantId;
-    private URL image;
+    private String image; // S3연동예정, 더미필드(임시)
     private String name;
     private int cost;
 

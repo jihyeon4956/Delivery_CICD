@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public MessageResponseDto handlerIllegalArgumentException(HttpServletResponse response,
-                                                              IllegalArgumentException ex) {
+            IllegalArgumentException ex) {
         log.error(ex.getMessage());
         response.setStatus(400);
         String msg = ex.getMessage();
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public MessageResponseDto handlerMethodArgumentNotValidException(HttpServletResponse response,
-                                                                     MethodArgumentNotValidException ex) {
+            MethodArgumentNotValidException ex) {
         log.error(ex.getMessage());
         response.setStatus(400);
         String msg = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();

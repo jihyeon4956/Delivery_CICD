@@ -3,7 +3,7 @@ package com.example.miniprojectdelivery.controller;
 
 import com.example.miniprojectdelivery.dto.MessageResponseDto;
 import com.example.miniprojectdelivery.dto.user.SignupRequestDto;
-import com.example.miniprojectdelivery.dto.user.MailRequestDto;
+import com.example.miniprojectdelivery.model.Mail;
 import com.example.miniprojectdelivery.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,26 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-
     @GetMapping("/login-page")
     public String loginPage() {
         return "login";
     }
 
-    @GetMapping("/login-redirect")
-    public String loginRedirect() {
-        return "redirect:/api/users/login-page";
-    }
-
-    @GetMapping("/signup")
-    public String signupPage() {
-        return "signup";
-    }
-
     @PostMapping("/signup")
-    public String signup(@Valid @RequestBody SignupRequestDto signupRequestDto){
-        userService.signup(signupRequestDto);
-        return "redirect:/api/users/login-page";
+    @ResponseBody
+    public ResponseEntity<MessageResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto){
+        return userService.signup(signupRequestDto);
     }
 
     @DeleteMapping("/{id}")
@@ -47,7 +36,7 @@ public class UserController {
 
     @PostMapping("/mailing")
     @ResponseBody
-    public void mailing(@RequestBody @Valid MailRequestDto email){
+    public void mailing(@RequestBody Mail email){
         userService.Mailing(email);
     }
 

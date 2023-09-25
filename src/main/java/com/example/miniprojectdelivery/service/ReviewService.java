@@ -10,8 +10,6 @@ import com.example.miniprojectdelivery.repository.RestaurantRepository;
 import com.example.miniprojectdelivery.repository.ReviewRepository;
 import com.example.miniprojectdelivery.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,26 +40,16 @@ public class ReviewService {
     }
 
     @Transactional
-    public ReviewResponseDto updateReview(Long reviewId, ReviewUpdateRequestDto requestDto, User user) {
+    public ReviewResponseDto updateReview(Long reviewId, ReviewUpdateRequestDto requestDto) {
         Review review = findReview(reviewId);
-
-        if (!review.getUser().getUsername().equals(user.getUsername())) {
-            throw new IllegalArgumentException("자신의 리뷰만 수정 가능합니다.");
-        }
-
         review.updateContentAndStars(requestDto);
 
         ReviewResponseDto responseDto = new ReviewResponseDto(review);
         return responseDto;
     }
 
-    public String  deleteReview(Long id, User user) { // 임시로 String 으로 반환
+    public String  deleteReview(Long id) { // 임시로 String 으로 반환
         Review review = findReview(id);
-
-        if (!review.getUser().getUsername().equals(user.getUsername())) {
-            throw new IllegalArgumentException("자신의 리뷰만 삭제 가능합니다.");
-        }
-
         reviewRepository.delete(review);
         return "리뷰 삭제에 성공 했습니다.";
 

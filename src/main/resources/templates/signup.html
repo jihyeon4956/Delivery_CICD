@@ -2,45 +2,66 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="utf-8">
     <title>Delivery Service(Project)</title>
-    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-          name="viewport">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="/img/favicon.png" rel="icon">
+    <link href="../static/img/favicon.png" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&family=Pacifico&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="/lib/animate/animate.min.css" rel="stylesheet">
-    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+    <link href="../static/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../static/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Template Stylesheet -->
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="../static/css/login.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+
+<!--    <script>-->
+<!--        function onclickAdmin() {-->
+<!--            // Get the checkbox-->
+<!--            var checkBox = document.getElementById("admin-check");-->
+<!--            // Get the output text-->
+<!--            var box = document.getElementById("admin-token");-->
+
+<!--            // If the checkbox is checked, display the output text-->
+<!--            if (checkBox.checked === true){-->
+<!--                box.style.display = "block";-->
+<!--            } else {-->
+<!--                box.style.display = "none";-->
+<!--            }-->
+<!--        }-->
+<!--    </script>-->
 </head>
+
 <body>
-<!--<iframe src=“login.html" id="iframe"></iframe>-->
+
 <!-- Navbar & Hero Start -->
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-        <a onclick="location.href='/'" class="navbar-brand p-0">
+        <a href="index.html" class="navbar-brand p-0">
             <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Delivery</h1>
             <!-- <img src="img/logo.png" alt="Logo"> -->
         </a>
@@ -49,19 +70,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 pe-4">
-                <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
-                <a onclick="location.href='/test/store'" class="nav-item nav-link">Store</a>
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="serch.html" class="nav-item nav-link">Serch</a>
+                <a href="store.html" class="nav-item nav-link">Store</a>
+<!--                <a href="store.html" class="nav-item nav-link">Menu</a>-->
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
-                        <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                        <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                        <a href="booking.html" class="dropdown-item">Booking</a>
+                        <a href="team.html" class="dropdown-item">Our Team</a>
                     </div>
                 </div>
-                <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link" id="login2">Login</a>
+                <a href="login.html" class="nav-item nav-link">Login</a>
             </div>
-            <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+            <a href="serch.html" class="btn btn-primary py-2 px-4">Order</a>
         </div>
     </nav>
 
@@ -81,162 +103,173 @@
 <!-- Navbar & Hero End -->
 
 
-<div class="container-xxl bg-white p-0 " style="height: 1200px">
-    <!-- Spinner Start -->
-    <div id="spinner"
-         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
-    </div>
-    <!-- Spinner End -->
+        <!-- Spinner End -->
 
-    <div id="login-form" style="height: 1400px">
-        <div id="login-title" style="text-align: center;">Sign Up</div>
+        <div id="login-form">
+            <div id="login-title" style="text-align: center;">Sign Up</div>
 
-        <form>
-            <div class="login-id-label">Username</div>
-            <input type="text" name="username" required placeholder="Username" class="login-input-box">
-            <div class="login-id-label">Password</div>
-            <input type="password" name="password" required class="login-input-box">
-            <div class="login-id-label">Confirm Password</div>
-            <input type="password" name="checkpassword" required class="login-input-box">
-            <div class="login-id-label">E-mail</div>
-            <input type="email" name="email" placeholder="E-mail" required class="login-input-box">
-            <div class="Email-background">
-                <button type="button" onclick="requestEmailCode()" class="login-input-box"
-                        style="background-color: #0F172B">Request Email Code
-                </button>
-            </div>
-            <div class="login-id-label">Email Code</div>
-            <input type="text" name="checkemail" required class="login-input-box">
-
-            <div class="login-id-label">Address</div>
-            <input type="text" name="address" required placeholder="address" class="login-input-box">
-            <div class="login-id-label">Street</div>
-            <input type="text" name="street" required placeholder="street" class="login-input-box">
-            <div>
-                <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">사업자
-                <input id="admin-token" type="password" name="adminToken" placeholder="사업자 암호" class="login-input-box"
-                       style="display:none">
-            </div>
-            <!--                <input type="button" value="Signup" onclick="submitSignup()">-->
-            <button id="login-id-submit" onclick="submitSignup()" class="login-input-box">회원 가입</button>
-        </form>
-    </div>
-
-    <script>
-
-        document.getElementById("login-id-submit").addEventListener("click", function (event) {
-            event.preventDefault();
-
-        })
-
-        function onclickAdmin() {
-            var checkBox = document.getElementById("admin-check");
-            var box = document.getElementById("admin-token");
-
-            if (checkBox.checked) {
-                box.style.display = "block";
-            } else {
-                box.style.display = "none";
-            }
-        }
-
-        function requestEmailCode() {
-            var email = $('[name="email"]').val();
-            if (!email) {
-                alert("Please enter your email first.");
-                return;
-            }
-
-            $.ajax({
-                type: "POST",
-                url: "/api/users/mailing",
-                contentType: "application/json",
-                data: JSON.stringify({email: email}),
-                success: function () {
-                    alert("Email code has been sent. Please check your email.");
-                },
-                error: function (err) {
-                    alert("Error: " + err.responseText);
-                }
-            });
-        }
-
-        function submitSignup() {
-            var formData = {
-                username: $('[name="username"]').val(),
-                password: $('[name="password"]').val(),
-                checkpassword: $('[name="checkpassword"]').val(),
-                address: $('[name="address"]').val(),
-                street: $('[name="street"]').val(),
-                email: $('[name="email"]').val(),
-                checkemail: $('[name="checkemail"]').val(),
-                admin: document.getElementById("admin-check").checked,
-                adminToken: $('[name="adminToken"]').val()
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "/api/users/signup",
-                contentType: "application/json",
-                data: JSON.stringify(formData),
-                success: function () {
-                    document.getElementById('login2').click();
-                },
-                error: function (err) {
-
-                    var msg = err.responseText;
-                    alert(JSON.parse(msg)["msg"]);
-                }
-            });
-        }
-    </script>
-
-    <!-- Contact Start -->
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="copyright">
-            <div class="row">
-                <div class="section-title text-start text-primary fw-normal mb-4">
-                    <p style="font-size: 35px">SpringBoot Project, Delivery </p>
-                    <i class="bi bi-github bi-3x" style="color: white; margin-right: 10px"></i><a style="color: white">Created
-                    By</a><br> <br>
-                    &copy; <a class="border-bottom" href="https://github.com/jihyeon4956">노지현</a>
-                    &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
-                    &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
-                    &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
+            <form>
+                <div class="login-id-label">Username</div>
+                <label>
+                    <input type="text" name="username" required placeholder="Username" class="login-input-box">
+                </label><br>
+                <div class="login-id-label">Password</div>
+                <label>
+                    <input type="password" name="password" required class="login-input-box">
+                </label><br>
+                <div class="login-id-label">Confirm Password</div>
+                <label>
+                    <input type="password" name="checkpassword" required class="login-input-box">
+                </label><br>
+                <div class="login-id-label">E-mail</div>
+                <label>
+                    <input type="email" name="email" required class="login-input-box">
+                </label><br>
+                <div class="login-id-label">Email Verification Code</div>
+                <label>
+                    <input type="text" name="checkemail" required class="login-input-box">
+                </label><br>
+                <div>
+                    <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;"><label
+                        for="admin-check">관리자</label>
+                    <label for="admin-token"></label><input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
+                <button type="button" onclick="requestEmailCode()">Request Email Code</button><br>
+                <input type="button" value="Signup" onclick="submitSignup()">
+                <button id="login-id-submit">회원 가입</button>
+            </form>
+
+<!--            <form action="/api/user/signup" method="post">-->
+<!--                <div class="login-id-label">Username</div>-->
+<!--                <input type="text" name="username" placeholder="Username" class="login-input-box">-->
+
+<!--                <div class="login-id-label">Password</div>-->
+<!--                <input type="password" name="password" class="login-input-box">-->
+
+<!--                <div class="login-id-label">E-mail</div>-->
+<!--                <input type="text" name="email" placeholder="E-mail" class="login-input-box">-->
+
+<!--                <div>-->
+<!--                    <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">관리자-->
+<!--                    <input id="admin-token" type="password" name="adminToken" placeholder="관리자 암호" class="login-input-box" style="display:none">-->
+<!--                </div>-->
+<!--                <button id="login-id-submit">회원 가입</button>-->
+<!--            </form>-->
+        </div>
+        <script>
+            function onclickAdmin() {
+                var checkBox = document.getElementById("admin-check");
+                var box = document.getElementById("admin-token");
+
+                if (checkBox.checked) {
+                    box.style.display = "block";
+                } else {
+                    box.style.display = "none";
+                }
+            }
+
+            function requestEmailCode() {
+                var email = $('[name="email"]').val();
+                if (!email) {
+                    alert("Please enter your email first.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/users/mailing",
+                    contentType: "application/json",
+                    data: JSON.stringify({ email: email }),
+                    success: function() {
+                        alert("Email code has been sent. Please check your email.");
+                    },
+                    error: function(err) {
+                        alert("Error: " + err.responseText);
+                    }
+                });
+            }
+
+            function submitSignup() {
+                var formData = {
+                    username: $('[name="username"]').val(),
+                    password: $('[name="password"]').val(),
+                    checkpassword: $('[name="checkpassword"]').val(),
+                    email: $('[name="email"]').val(),
+                    checkemail: $('[name="checkemail"]').val(),
+                    admin: document.getElementById("admin-check").checked,
+                    adminToken: $('[name="adminToken"]').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/users/signup",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        alert(response.message);
+                    },
+                    error: function(err) {
+                        alert("Error: " + err.responseText);
+                    }
+                });
+            }
+        </script>
+
+
+
+
+
+        <!-- Contact Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="section-title text-start text-primary fw-normal mb-4">
+                        <p style="font-size: 35px">SpringBoot Project, Delivery </p>
+                        <i class="bi bi-github bi-3x" style="color: white; margin-right: 10px"></i><a style="color: white">Created By</a><br> <br>
+                        &copy; <a class="border-bottom" href="https://github.com/jihyeon4956">노지현</a>
+                        &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
+                        &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
+                        &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <div class="footer-menu">
+                            <a href="index.html">Home</a>
+                            <a href="serch.html">Order</a>
+                            <a href="review.html">Review</a>
+                            <a href="">Help</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Footer End -->
+        <!-- Footer End -->
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
-    <!-- Footer End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</div>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/lib/wow/wow.min.js"></script>
+    <script src="../static/lib/easing/easing.min.js"></script>
+    <script src="../static/lib/waypoints/waypoints.min.js"></script>
+    <script src="../static/lib/counterup/counterup.min.js"></script>
+    <script src="../static/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../static/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/lib/wow/wow.min.js"></script>
-<script src="/lib/easing/easing.min.js"></script>
-<script src="/lib/waypoints/waypoints.min.js"></script>
-<script src="/lib/counterup/counterup.min.js"></script>
-<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="/lib/tempusdominus/js/moment.min.js"></script>
-<script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-<!-- Template Javascript -->
-<script src="/js/main.js"></script>
+    <!-- Template Javascript -->
+    <script src="../static/js/main.js"></script>
 </body>
 
 

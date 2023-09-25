@@ -6,7 +6,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,30 +17,33 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Slf4j(topic = "JWT 검증 및 인가")
-@RequiredArgsConstructor
 //authfilter,loggingfilter 대신 편리하게 사용
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
 
+    public JwtAuthorizationFilter(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 
-        //access 토큰 값
-        String accessTokenValue = jwtUtil.getTokenFromRequest(req);
-        //refresh 토큰 값
-        String refreshTokenValue = jwtUtil.getRefreshTokenFromRequest(req);
+        String tokenValue = jwtUtil.getTokenFromRequest(req);
 
-        if (StringUtils.hasText(accessTokenValue)) {
+        if (StringUtils.hasText(tokenValue)) {
             // JWT 토큰 substring
-            accessTokenValue = jwtUtil.substringToken(accessTokenValue);
+            tokenValue = jwtUtil.substringToken(tokenValue);
+            log.info(tokenValue);
 
-            //access토큰이 유효하면 그대로 반환, 만료되어 refresh토큰 통해 반환되면 새로운 토큰 발급
-            String token = jwtUtil.validateToken(accessTokenValue, refreshTokenValue,res);
-            accessTokenValue = token;
+            if (!jwtUtil.validateToken(tokenValue)) {
+                log.error("Token Error");
+                return;
+            }
 
-            Claims info = jwtUtil.getUserInfoFromToken(accessTokenValue);
+            Claims info = jwtUtil.getUserInfoFromToken(tokenValue);
 
             try {
                 setAuthentication(info.getSubject());
