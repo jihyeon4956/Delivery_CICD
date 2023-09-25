@@ -118,9 +118,9 @@ public class UserService {
             props.put("mail.smtp.ssl.trust", HOST);
             props.put("mail.smtp.auth", "true");
             // SMTP Session 생성
-            Session mailSession = Session.getDefaultInstance(props, new javax.mail.Authenticator(){
-                protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                    return new javax.mail.PasswordAuthentication(MAIL_ID, MAIL_PW);
+            Session mailSession = Session.getDefaultInstance(props, new Authenticator(){
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(MAIL_ID, MAIL_PW);
                 }
             });
 
