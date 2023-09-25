@@ -34,7 +34,7 @@ jobs:
     - name: Copy gradlew script to EC2
       run: |
         scp -i ~/.ssh/dCICD.pem ./gradlew ubuntu@13.125.33.250:/home/ubuntu/app/
-        ssh -i ~/.ssh/dCICD.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
+        ssh -i /c/Users/JH/.ssh/dCICD.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
