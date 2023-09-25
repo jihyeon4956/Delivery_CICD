@@ -247,5 +247,3 @@ eval "set -- $(
 
 exec "$JAVACMD" "$@"
 
-
-권한설정용
