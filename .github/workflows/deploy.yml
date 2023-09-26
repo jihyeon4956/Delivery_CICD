@@ -7,9 +7,9 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3_BUCKET_NAME: mini-delivery1
-  CODE_DEPLOY_APPLICATION_NAME: delivery-codedeploy-app
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: delivery-codedeployment-group
+  S3_BUCKET_NAME: deliverycicd2
+  CODE_DEPLOY_APPLICATION_NAME: delCICD-codedeploy-app
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: delivery-codedeploy-deployment-group
 
 permissions:
   contents: read
