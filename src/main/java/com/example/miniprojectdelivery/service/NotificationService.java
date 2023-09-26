@@ -24,8 +24,6 @@ public class NotificationService {
     private final JwtUtil jwtUtil;
 
     public SseEmitter subscribe(String token, String lastEventId) {
-        System.out.println("HELLLLL");
-        System.out.println(token);
         String userId = jwtUtil.getUserInfoFromToken(jwtUtil.substringToken(token)).getSubject();
 
         String emitterId = makeTimeIncludeId(userId);

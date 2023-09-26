@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -37,6 +40,9 @@ public class User {
 
     @Column
     private Long point;
+
+    @OneToOne(mappedBy = "user")
+    private Restaurant restaurant;
 
     public User(String username, String password, UserRoleEnum role, String email, Address address) {
         System.out.println("makeuser");

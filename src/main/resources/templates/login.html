@@ -65,18 +65,18 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                        <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
-                        <a onclick="location.href='/test/store'" class="nav-item nav-link">Store</a>
+                        <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
+
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                             <div class="dropdown-menu m-0">
-                                <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                                <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                                <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                                <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                             </div>
                         </div>
                         <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                     </div>
-                    <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                    <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
                 </div>
             </nav>
 
@@ -131,14 +131,7 @@
                         &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                         &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
                     </div>
-                    <div class="col-md-6 text-md-end">
-                        <div class="footer-menu">
-                            <a onclick="location.href='/'">Home</a>
-                            <a onclick="location.href='/test/search'">Order</a>
-                            <a onclick="location.href='/test/review'">Review</a>
-                        </div>
-                    </div>
-                </div>
+                 </div>
             </div>
         </div>
         <!-- Footer End -->
@@ -175,8 +168,6 @@
         const errorDiv = document.getElementById('login-failed');
         errorDiv.style.display = 'block';
     }
-
-    const host = 'http://' + window.location.host;
 
     function onLogin() {
         let username = $('#username').val();

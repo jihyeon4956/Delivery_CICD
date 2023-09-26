@@ -24,8 +24,9 @@ public class MenuService {
     private final RestaurantRepository restaurantRepository;
     private final S3Uploader s3Uploader;
 
-    public MenuResponseDto createMenu(User user, MultipartFile image, Long restaurantId, String name, int cost) throws IOException {
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
+//    public MenuResponseDto createMenu(User user, MultipartFile image, Long restaurantId, String name, int cost) throws IOException {
+    public MenuResponseDto createMenu(User user, MultipartFile image,String name, int cost) throws IOException {
+        Restaurant restaurant = restaurantRepository.findById(user.getRestaurant().getId()).orElseThrow(
                 () -> new IllegalArgumentException("음식점을 찾을 수 없습니다"));
 
         // 음식점의 사장님과 메뉴를 생성하려는 사장님이 일치하지 않을 경우
@@ -42,8 +43,8 @@ public class MenuService {
     }
 
 
-    public List<MenuResponseDto> getMenus() {
-        List<Menu> menuList = menuRepository.findAll();
+    public List<MenuResponseDto> getMenus(User user) {
+        List<Menu> menuList = menuRepository.findAllByRestaurantId(user.getRestaurant().getId());
         return menuList.stream().map(MenuResponseDto::new).toList();
     }
 

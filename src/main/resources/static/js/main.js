@@ -1,3 +1,6 @@
+
+const host = 'http://' + window.location.host;
+
 (function ($) {
     "use strict";
 
@@ -81,8 +84,6 @@
         $('.btn-play').click(function () {
             $videoSrc = $(this).data("src");
         });
-        console.log($videoSrc);
-
         $('#videoModal').on('shown.bs.modal', function (e) {
             $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
         })
@@ -126,15 +127,32 @@ const getCookieValue = (key) => {
 
     return cookies[key] || null;
 };
-const authorization = getCookieValue('Authorization');
-console.log(authorization)
 
-if (authorization) {
-    const eventSource = new EventSource('http://localhost:8080/test/subscribe/'+authorization);
-    //1 대신 cookie의 헤더 정보를 가져와서 userid를 집어넣어준다.
-    eventSource.addEventListener('sse', event => {
-        let jobj = JSON.parse(event.data).content
-        if(jobj != null) alert(jobj)
-    });
+$(document).ready(function(){
+    const authorization = getCookieValue('Authorization');
+    console.log(authorization)
+
+    if (authorization) {
+        let URL = host + '/test/subscribe/'+authorization;
+        console.log("------------------------------")
+        console.log(URL)
+
+        const eventSource = new EventSource(URL);
+
+        //const eventSource = new EventSource('http://localhost:8080/test/subscribe/'+authorization);
+        //1 대신 cookie의 헤더 정보를 가져와서 userid를 집어넣어준다.
+        eventSource.addEventListener('sse', event => {
+            let jobj = JSON.parse(event.data).content
+            if(jobj != null) alert(jobj)
+        });
+    }
+});
+
+function logout() {
+    // 토큰 삭제
+    console.log("logout 진입")
+    //Cookies.remove('Authorization', {path: '/'});
+    //Cookies.remove('Refresh', {path: '/'});
+    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+    window.location.href = host + '/api/users/login-page';
 }
-

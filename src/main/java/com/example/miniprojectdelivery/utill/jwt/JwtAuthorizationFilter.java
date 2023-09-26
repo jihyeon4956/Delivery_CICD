@@ -28,26 +28,29 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 
-        //access 토큰 값
-        String accessTokenValue = jwtUtil.getTokenFromRequest(req);
-        //refresh 토큰 값
-        String refreshTokenValue = jwtUtil.getRefreshTokenFromRequest(req);
+        //home 화면은 토큰 체크 x
+        if(!req.getRequestURL().equals("/") ) {
+            //access 토큰 값
+            String accessTokenValue = jwtUtil.getTokenFromRequest(req);
+            //refresh 토큰 값
+            String refreshTokenValue = jwtUtil.getRefreshTokenFromRequest(req);
 
-        if (StringUtils.hasText(accessTokenValue)) {
-            // JWT 토큰 substring
-            accessTokenValue = jwtUtil.substringToken(accessTokenValue);
+            if (StringUtils.hasText(accessTokenValue)) {
+                // JWT 토큰 substring
+                accessTokenValue = jwtUtil.substringToken(accessTokenValue);
 
-            //access토큰이 유효하면 그대로 반환, 만료되어 refresh토큰 통해 반환되면 새로운 토큰 발급
-            String token = jwtUtil.validateToken(accessTokenValue, refreshTokenValue,res);
-            accessTokenValue = token;
+                //access토큰이 유효하면 그대로 반환, 만료되어 refresh토큰 통해 반환되면 새로운 토큰 발급
+                String token = jwtUtil.validateToken(accessTokenValue, refreshTokenValue, res);
+                accessTokenValue = token;
 
-            Claims info = jwtUtil.getUserInfoFromToken(accessTokenValue);
+                Claims info = jwtUtil.getUserInfoFromToken(accessTokenValue);
 
-            try {
-                setAuthentication(info.getSubject());
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                return;
+                try {
+                    setAuthentication(info.getSubject());
+                } catch (Exception e) {
+                    log.error(e.getMessage());
+                    return;
+                }
             }
         }
 

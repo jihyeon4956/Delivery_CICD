@@ -41,7 +41,7 @@ public class Order {
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     private List<OrderMenu> orderMenus = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;  //배송 정보
 

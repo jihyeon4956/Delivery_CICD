@@ -60,18 +60,18 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
 
@@ -81,7 +81,7 @@
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Owner</h1>
 
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-center text-uppercase">
+                    <ol class="breadcrumb justify-content-center text-uppercase" style="background-color: transparent">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
 
@@ -95,192 +95,298 @@
     <!-- Navbar & Hero End -->
 
     <div class="container" style="margin-bottom: 50px">
+
+        <h1>Restaurant Management</h1>
+
+        <!-- 레스토랑 생성 폼이 여기에 나타납니다. -->
+        <form id="createRestaurantForm">
+            <div class="login-id-label">Restaurant Name:</div>
+            <input type="text" name="name" id="restaurant_name" required placeholder="name" class="login-input-box">
+            <div class="login-id-label">Restaurant Address:</div>
+            <input type="text" id="restaurant_address" name="address" required placeholder="address"
+                   class="login-input-box">
+            <button type="button" onclick="createRestaurant()">Create Restaurant</button>
+        </form>
+
+        <br>
+
+        <div id="restaurantInfo">
+            <!-- 레스토랑 정보가 여기에 나타납니다. -->
+        </div>
+
         <h1>Menu Management</h1>
 
         <!-- Menu Add Form -->
-        <h2>Add Menu</h2>
-        <form id="menuForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="image">Menu Image:</label>
-                <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
-            </div>
-            <div class="form-group">
-                <label for="name">Menu Name:</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Menu Name" required>
-            </div>
-            <div class="form-group">
-                <label for="cost">Menu Cost:</label>
-                <input type="number" class="form-control" id="cost" name="cost" placeholder="Menu Cost" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Menu</button>
-        </form>
-    </div>
+        <div class="container">
+            <h2>Add Menu</h2>
 
-    <div class="menuList">
-        <!-- Menu List -->
-        <h2 style="margin-top: 50px">Menu List</h2>
-        <ul id="menuList" class="list-group">
-            <!-- Menu items will be added here dynamically -->
-        </ul>
-    </div>
-
-
-
-    <div class="container my-4" style="margin-top: 50px">
-        <h2>Order List</h2>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>이미지</th>
-                <th>메뉴명</th>
-                <th>수량</th>
-                <th>가격</th>
-                <th>주문자</th>
-                <th>주소</th>
-                <th>상태 변경</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orders}">
-                <td><img th:src="${order.image}" alt="Image" width="50" height="50"/></td>
-                <td th:text="${order.menuName}"></td>
-                <td th:text="${order.quantity}"></td>
-                <td th:text="${order.price}"></td>
-                <td th:text="${order.customerName}"></td>
-                <td th:text="${order.address}"></td>
-                <td><input type="checkbox" th:value="${order.id}" class="order-checkbox"/></td>
-            </tr>
-            </tbody>
-        </table>
-        <button id="completeDeliveryBtn" class="btn btn-success">배달 완료</button>
-    </div>
-
-
-
-    <!-- owner orderlist End -->
-
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="copyright">
-            <div class="row">
-                <div class="section-title text-start text-primary fw-normal mb-4">
-                    <p style="font-size: 35px">SpringBoot Project, Delivery </p>
-                    <i class="bi bi-github bi-3x" style="color: white; margin-right: 10px"></i><a style="color: white">Created
-                    By</a><br> <br>
-                    &copy; <a class="border-bottom" href="https://github.com/jihyeon4956">노지현</a>
-                    &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
-                    &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
-                    &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
+            <form id="menuForm" enctype="multipart/form-data" method="post" action="/api/menus">
+                <div class="form-group">
+                    <label for="image">Menu Image:</label>
+                    <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
+                <div class="form-group">
+                    <label for="name">Menu Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Menu Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cost">Menu Cost:</label>
+                    <input type="number" class="form-control" id="cost" name="cost" placeholder="Menu Cost" required>
+                </div>
+                <button type="submit">Add Menu</button>
+            </form>
+
+        </div>
+
+        <div class="menuList">
+            <!-- Menu List -->
+            <h2 style="margin-top: 50px">Menu List</h2>
+            <ul id="menuList" class="list-group">
+                <!-- Menu items will be added here dynamically -->
+            </ul>
+        </div>
+
+
+        <div class="container my-4" style="margin-top: 50px">
+            <h2>Order List</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>주문 ID</th>
+                    <th>메뉴명</th>
+                    <th>가격</th>
+                    <th>수량</th>
+                    <th>주문자</th>
+                    <th>주소</th>
+                    <th>상태 변경</th>
+                    <th>상태 </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${orders != null}" th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+
+                    <td th:text="${order.menuName}"></td>
+                    <td th:text="${order.totalPrice}"></td>
+                    <td th:text="${order.count}"></td>
+                    <td th:text="${order.customerName}"></td>
+                    <td th:text="${order.address}"></td>
+                    <td>
+                        <button disabled th:if="${order.state == 'COMPLETE'}" class="btn btn-danger">배송 완료</button>
+                        <button id="deliveryButton" class="btn btn-success" th:if="${order.state == 'READY'}" th:data-orderid="${order.id}"   >주문 배송</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- owner orderlist End -->
+
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="section-title text-start text-primary fw-normal mb-4">
+                        <p style="font-size: 35px">SpringBoot Project, Delivery </p>
+                        <i class="bi bi-github bi-3x" style="color: white; margin-right: 10px"></i><a style="color: white">Created
+                        By</a><br> <br>
+                        &copy; <a class="border-bottom" href="https://github.com/jihyeon4956">노지현</a>
+                        &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
+                        &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
+                        &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Footer End -->
-    Certainly, if you prefer to write all your HTML and JavaScript in a single file without separation, you can do so. Here's a complete HTML file that includes both the HTML structure and the JavaScript code:
 
-    html
-    Copy code
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Menu Management</title>
-
-        <!-- Add your CSS stylesheets here, if needed -->
-
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        <!-- Your JavaScript code -->
         <script>
-            $(document).ready(function () {
-                // Function to load menu list from the server and populate the menuList container
-                function loadMenuList() {
-                    $.get('/api/menus', function (data) {
-                        var menuList = $('#menuList');
-                        menuList.empty();
-                        $.each(data, function (index, menu) {
-                            var listItem = $('<li class="list-group-item">');
-                            listItem.append('<img src="' + menu.image + '" alt="Menu Image" width="100">');
-                            listItem.append('<h3>' + menu.name + '</h3>');
-                            listItem.append('<p>Price: $' + menu.cost + '</p>');
-                            menuList.append(listItem);
+            // // 페이지가 로드되면 메뉴 리스트를 가져옵니다.
+            // window.onload = function () {
+            //     fetch('/api/menus')
+            //         .then(response => response.json())
+            //         .then(data => {
+            //             const menuList = document.getElementById('menuList');
+            //             data.forEach(menu => {
+            //                 const li = document.createElement('li');
+            //                 li.className = 'list-group-item';
+            //                 li.innerHTML = `
+            //             <img src="${menu.image}" alt="${menu.name}" width="100"/>
+            //             <strong>${menu.name}</strong> - ${menu.cost}
+            //         `;
+            //                 menuList.appendChild(li);
+            //             });
+            //         })
+            //         .catch(error => console.error('Error fetching the menu list:', error));
+            // }
+
+            window.onload = function () {
+                fetch('/api/menus')
+                    .then(response => response.json())
+                    .then(data => {
+                        const menuList = document.getElementById('menuList');
+                        data.forEach(menu => {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item';
+
+                            const img = document.createElement('img');
+                            img.src = menu.image;
+                            img.alt = menu.name;
+                            img.width = 100;
+
+                            const name = document.createElement('strong');
+                            name.textContent = menu.name;
+
+                            const cost = document.createTextNode(` - ${menu.cost}`);
+
+                            // Delete Button 생성
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.textContent = 'Delete';
+                            deleteBtn.className = 'btn btn-danger btn-sm'; // Bootstrap 클래스를 사용하여 스타일링
+                            deleteBtn.onclick = function() {
+                                deleteMenu(menu.id); // deleteMenu 함수 호출 시 menuId 파라미터로 전달
+                            };
+
+                            li.appendChild(img);
+                            li.appendChild(name);
+                            li.appendChild(cost);
+                            li.appendChild(deleteBtn); // 생성한 Delete Button을 li에 추가
+
+                            menuList.appendChild(li);
                         });
-                    });
-                }
+                    })
+                    .catch(error => console.error('Error fetching the menu list:', error));
+            }
 
-                // Initial load of menu list
-                loadMenuList();
 
-                // Show the add menu container when needed
-                $('#showAddMenuBtn').click(function () {
-                    $('#addMenuContainer').show();
-                });
+        </script>
 
-                // Handle menu form submission
-                $('#menuForm').submit(function (event) {
-                    event.preventDefault();
-                    var formData = new FormData(this);
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            // 레스토랑이 존재하고 정보를 표시하는 함수
 
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/menus', // Spring Boot Controller URL
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (data) {
-                            alert('Menu added successfully');
-                            // Clear form fields and reload menu list
-                            $('#menuForm')[0].reset();
-                            loadMenuList();
-                            $('#addMenuContainer').hide(); // Hide the add menu container again
-                        },
-                        error: function (error) {
-                            console.error(error);
-                            alert('Error adding menu');
+            //레스토랑 있으면 보여주고, 없으면 생성
+            $(document).ready(function () {
+                function checkAndCreateRestaurant() {
+                    $.get('/api/restaurants', function (data) {
+                        console.log(data);
+                        // Check if the restaurant data exists
+                        if (data && Object.keys(data).length > 0) {
+                            // Restaurant exists, display its information
+                            $('#restaurantInfo').html(
+                                '<h1>My Restaurant</h1>' + '<br>' +
+                                '<h3>Restaurant Name: ' + data.name + '</h3>' + '<h3>Restaurant Address: ' + data.address + '</h3>'
+                                + '<br>'
+                            );
+                        } else {
+                            // Restaurant does not exist, display a message
+                            $('#restaurantInfo').html(
+                                '<h1>나의 업장 정보가 없습니다. 새로 개설하셔야 합니다.</h1>'
+                            );
                         }
                     });
+                }
+                checkAndCreateRestaurant();
+            });
+
+
+            // 초기에 레스토랑을 확인합니다.
+
+
+        </script>
+        <!--    </script>-->
+
+
+        <!--레스토랑 생성-DB저장 확인완료-->
+        <script>
+            function createRestaurant() {
+                var formData = {
+                    name: $('[name="name"]').val(),
+                    address: $('[name="address"]').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/restaurants",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function () {
+                        alert("등록완료");
+                    },
+                    error: function (err) {
+                        var msg = err.responseText;
+                        alert(JSON.parse(msg)["msg"]);
+                    }
                 });
+                window.location.reload();
+            }
+        </script>
+
+
+
+        <script>
+            $(document).ready(function () {
+                // 주문 배송 버튼 클릭 이벤트 핸들러
+                $('#deliveryButton').click(function () {
+                    var orderId = $(this).data('orderid'); // data-orderid 속성에서 orderId 값을 가져옴
+                    var deliveryButton = $(this); // 클릭한 버튼을 변수에 저장
+                    console.log(orderId);
+
+                    // POST 요청 보내기
+                    $.post(`/api/orders/${orderId}/deliver`, function (response) {
+                        console.log(response);
+
+                        // 배송 완료 버튼으로 변경 (예시)
+                        deliveryButton.prop('disabled', true);
+                        deliveryButton.text('배송 완료');
+                        deliveryButton.removeClass('btn-success').addClass('btn-danger');
+                    })
+                        .done (function (){
+                            window.location.reload();
+                        })
+                        .fail(function (xhr, textStatus, error) {
+                            console.error('API request failed:', error);
+                        });
+
+                });
+
             });
         </script>
 
-    <script>
-        document.getElementById('completeDeliveryBtn').addEventListener('click', function() {
-            let checkedOrders = Array.from(document.querySelectorAll('.order-checkbox:checked'))
-                .map(checkbox => checkbox.value);
 
-            if(checkedOrders.length > 0) {
-                $.ajax({
-                    url: '/api/orders/complete',
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(checkedOrders),
-                    success: function(response) {
-                        alert('성공적으로 처리되었습니다.');
-                        location.reload();
-                    },
-                    error: function(error) {
-                        console.error(error);
-                        alert('처리 중 오류가 발생했습니다.');
-                    }
-                });
+        <script>
+            function deleteMenu(menuId) {
+                if (confirm("Are you sure you want to delete this menu?")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/api/menus/" + menuId,
+                        success: function () {
+                            alert("Menu Deleted Successfully!");
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            var msg = err.responseText;
+                            alert(JSON.parse(msg)["msg"]);
+                        }
+                    });
+                }
             }
-        });
-    </script>
+        </script>
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    </div>
 </div>
 
+
 <!-- JavaScript Libraries -->
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -293,9 +399,11 @@
 <script src="/lib/tempusdominus/js/moment.min.js"></script>
 <script src="/lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
+
 </body>
 
 

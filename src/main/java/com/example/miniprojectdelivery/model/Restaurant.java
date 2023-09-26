@@ -29,7 +29,7 @@ public class Restaurant {
     @JoinColumn(name = "owner_id")
     private User user;
 
-    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Menu> menuList = new ArrayList<>();
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.REMOVE)

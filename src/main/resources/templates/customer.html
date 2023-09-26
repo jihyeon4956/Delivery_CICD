@@ -59,18 +59,18 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
 
@@ -99,28 +99,35 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Image</th>
-                        <th>Product Name</th>
-                        <th>Price</th>
+                        <th>Restaurant Name</th>
+                        <th>Menu name</th>
+                        <th>Count</th>
+                        <th>totalPrice</th>
+                        <th>OrderState</th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- Thymeleaf 반복문을 사용하여 주문 목록을 동적으로 생성 -->
-                    <tr th:each="order : ${orders}">
-                        <td><img th:src="${order.imageUrl}" alt="Product Image" width="50" height="50"/></td>
-                        <td th:text="${order.productName}"></td>
-                        <td th:text="${order.price}"></td>
+                    <tr th:each="order : ${orders}" >
+                        <td th:text="${order.restaurantName}"></td>
+                        <td th:text="${order.menuName}"></td>
+                        <td th:text="${order.count}"></td>
+                        <td th:text="${order.totalPrice}"></td>
+                        <td>
+                            <span disabled th:if="${order.state == 'COMPLETE'}" class="btn btn-danger">배송 완료</span>
+                            <span class="btn btn-success" th:if="${order.state == 'READY'}" >주문 접수 </span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 text-end">
-                <h5>Total: <span th:text="${totalAmount}"></span></h5>
-            </div>
-        </div>
+<!--        <div class="row">-->
+<!--            <div class="col-md-12 text-end">-->
+<!--                <h5>Total: <span th:text="${totalAmount}"></span></h5>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
     <!-- Footer Start -->
@@ -137,13 +144,6 @@
                     &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                     &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -152,6 +152,36 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 </div>
+
+<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--<script>-->
+<!--    // 페이지가 로드되면 주문 목록을 가져와서 테이블에 추가합니다.-->
+<!--    $(document).ready(function () {-->
+<!--        function populateOrderList() {-->
+<!--            $.get('/api/orders', function (data) {-->
+<!--                console.log(data);-->
+
+<!--                // 테이블 내용 초기화-->
+<!--                var tableBody = $('#orderList');-->
+<!--                tableBody.empty();-->
+
+<!--                // 주문 목록 데이터를 테이블에 추가-->
+<!--                data.forEach(function (order) {-->
+<!--                    var row = $('<tr>');-->
+<!--                    row.append('<td>' + order.restaurantName + '</td>');-->
+<!--                    row.append('<td>' + order.menuName + '</td>');-->
+<!--                    row.append('<td>' + order.count + '</td>');-->
+<!--                    row.append('<td>' + order.totalPrice + '</td>');-->
+<!--                    row.append('<td>' + order.state + '</td>');-->
+<!--                    tableBody.append(row);-->
+<!--                });-->
+<!--            });-->
+<!--        }-->
+
+<!--        // 주문 목록 데이터를 테이블에 추가하는 함수 호출-->
+<!--        populateOrderList();-->
+<!--    });-->
+<!--</script>-->
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

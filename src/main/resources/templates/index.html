@@ -49,7 +49,6 @@
     <div class="container-xxl position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
             <a onclick="location.href='/'" class="navbar-brand p-0">
-
                 <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Delivery</h1>
                 <!-- <img src="img/logo.png" alt="Logo"> -->
             </a>
@@ -59,19 +58,20 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
-                    <a onclick="location.href='/test/store'" class="nav-item nav-link">Store</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
+                    <a onclick=logout() class="nav-item nav-link">Logout</a>
+<!--                    <button onclick=logout() >로그아웃</button>-->
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
-
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
 
@@ -81,8 +81,8 @@
                     <div class="col-lg-6 text-center text-lg-start">
                         <h1 class="display-3 text-white animated slideInLeft">Try Your<br>Delicious Meal</h1><br>
                         <p class="text-white animated slideInLeft mb-4 pb-2">이 사이트는 음식 배달을 간편하게 즐길 수 있는 고객과 음식점 사장님을 위한
-                            플랫폼으로, 회원가입 혜택과 함께 업장 및 메뉴 관리, 주문 및 배달 확인, 리뷰 및 평점 등을 제공하여 편리한 음식 주문 경험을 제공합니다.</p>
-                        <a onclick="location.href='/test/search'"
+                            플랫폼으로, 회원가입 혜택과 함께 업장 및 메뉴 관리, 주문 및 배달 확인, 리뷰 및 평점 등을 제공하여 편리한 음식 주문을 제공합니다.</p>
+                        <a onclick="location.href='/view/search'"
                            class="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">ORDER NEW</a>
                     </div>
                     <div class="col-lg-6 text-center text-lg-end overflow-hidden">
@@ -114,7 +114,7 @@
                     <div class="p-4">
                         <i class="fa fa-3x fa-utensils text-primary mb-4"></i>
                         <h5>Quality Food</h5>
-                        <p>가입시 100만 포인트 특별지급, <br>편리한 주문 및 배달 서비스 제공</p>
+                        <p>가입시 100만 포인트 특별지급, <br>주문 및 배달 서비스 제공</p>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@
             <ul class="nav nav-pills d-inline-flex justify-content-center border-bottom mb-5">
                 <li class="nav-item">
                     <a class="d-flex align-items-center text-start mx-3 me-0 pb-3"
-                       onclick="location.href='/test/search'">
+                       onclick="location.href='/view/search'">
 
                         <i class="bi bi-question-circle-fill bi-2x text-primary" style="font-size: 70px;"></i>
                         <div class="ps-4">
@@ -166,73 +166,21 @@
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+            <div th:each="rank : ${ranks}" class="col-lg-3 col-md-6 wow fadeInUp" style="height: calc(100% - 25px);" data-wow-delay="0.1s">
                 <div class="team-item text-center rounded overflow-hidden">
                     <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
+                        <img class="img-fluid" th:src="${rank.image}" alt="">
                     </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
+                    <h5 class="mb-0" th:text="${rank.name}"></h5>
                     <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
+                        <a class="btn btn-square btn-primary mx-1" th:href="'/view/restaurants/' + ${rank.id}">
+                            <i class="fa fa-utensils" style="font-size: 20px"></i>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-1.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="team-item text-center rounded overflow-hidden">
-                    <div class="rounded-circle overflow-hidden m-4">
-                        <img class="img-fluid" src="/img/team-2.jpg" alt="">
-
-                    </div>
-                    <h5 class="mb-0">Test1</h5>
-                    <small>이사람 가게로 바로연결 원함(store.html)</small>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a class="btn btn-square btn-primary mx-1" onclick="location.href='/test/store'"><i
-                                class="fa fa-utensils"
-                                style="font-size: 20px"></i></a>
-
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+
 
 
     </div>
@@ -308,14 +256,7 @@
                 &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                 &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
             </div>
-            <div class="col-md-6 text-md-end">
-                <div class="footer-menu">
-                    <a onclick="location.href='/'">Home</a>
-                    <a onclick="location.href='/test/search'">Order</a>
-                    <a onclick="location.href='/test/review'">Review</a>
 
-                </div>
-            </div>
         </div>
     </div>
 </div>

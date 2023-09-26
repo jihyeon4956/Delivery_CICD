@@ -36,7 +36,7 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-<!--<iframe src=“login.html" id="iframe"></iframe>-->
+<!--<iframe src="login.html" id="iframe"></iframe>-->
 <!-- Navbar & Hero Start -->
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -50,21 +50,20 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0 pe-4">
                 <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
-                <a onclick="location.href='/test/store'" class="nav-item nav-link">Store</a>
+                <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                     <div class="dropdown-menu m-0">
-                        <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                        <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                        <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                        <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                     </div>
                 </div>
                 <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link" id="login2">Login</a>
             </div>
-            <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+            <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
         </div>
     </nav>
-
     <div class="container-xxl py-5 bg-dark hero-header mb-5">
         <div class="container text-center my-5 pt-5 pb-4">
             <h1 class="display-3 text-white mb-3 animated slideInDown">Sign Up</h1>
@@ -116,11 +115,8 @@
             <div class="login-id-label">Street</div>
             <input type="text" name="street" required placeholder="street" class="login-input-box">
             <div>
-                <input id="admin-check" type="checkbox" name="admin" onclick="onclickAdmin()" style="margin-top: 40px;">사업자
-                <input id="admin-token" type="password" name="adminToken" placeholder="사업자 암호" class="login-input-box"
-                       style="display:none">
+                <input id="admin-check" type="checkbox" name="owner" style="margin-top: 40px;">사업자
             </div>
-            <!--                <input type="button" value="Signup" onclick="submitSignup()">-->
             <button id="login-id-submit" onclick="submitSignup()" class="login-input-box">회원 가입</button>
         </form>
     </div>
@@ -132,16 +128,16 @@
 
         })
 
-        function onclickAdmin() {
-            var checkBox = document.getElementById("admin-check");
-            var box = document.getElementById("admin-token");
-
-            if (checkBox.checked) {
-                box.style.display = "block";
-            } else {
-                box.style.display = "none";
-            }
-        }
+        // function onclickAdmin() {
+        //     var checkBox = document.getElementById("admin-check");
+        //     var box = document.getElementById("admin-token");
+        //
+        //     if (checkBox.checked) {
+        //         box.style.display = "block";
+        //     } else {
+        //         box.style.display = "none";
+        //     }
+        // }
 
         function requestEmailCode() {
             var email = $('[name="email"]').val();
@@ -165,6 +161,7 @@
         }
 
         function submitSignup() {
+            var isAdmin = document.getElementById("admin-check").checked;
             var formData = {
                 username: $('[name="username"]').val(),
                 password: $('[name="password"]').val(),
@@ -173,8 +170,7 @@
                 street: $('[name="street"]').val(),
                 email: $('[name="email"]').val(),
                 checkemail: $('[name="checkemail"]').val(),
-                admin: document.getElementById("admin-check").checked,
-                adminToken: $('[name="adminToken"]').val()
+                owner: isAdmin
             };
 
             $.ajax({
@@ -186,7 +182,6 @@
                     document.getElementById('login2').click();
                 },
                 error: function (err) {
-
                     var msg = err.responseText;
                     alert(JSON.parse(msg)["msg"]);
                 }
@@ -206,13 +201,6 @@
                     &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
                     &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                     &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
-                    </div>
                 </div>
             </div>
         </div>

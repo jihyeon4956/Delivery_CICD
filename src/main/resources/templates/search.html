@@ -25,7 +25,7 @@
     <!-- Libraries Stylesheet -->
     <link href="/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+    <link href="/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.ㄱ" rel="stylesheet"/>
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -59,23 +59,23 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0 pe-4">
                     <a onclick="location.href='/'" class="nav-item nav-link active">Home</a>
-                    <a onclick="location.href='/test/search'" class="nav-item nav-link">Search</a>
+                    <a onclick="location.href='/view/search'" class="nav-item nav-link">Search</a>
 
-                        <div class="nav-item dropdown">
+                    <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">MyPages</a>
                         <div class="dropdown-menu m-0">
-                            <a onclick="location.href='/test/customer'" class="dropdown-item">Customer</a>
-                            <a onclick="location.href='/test/owner'" class="dropdown-item">Owner</a>
+                            <a onclick="location.href='/view/myorderlists'" class="dropdown-item">Customer</a>
+                            <a onclick="location.href='/view/mypages'" class="dropdown-item">Owner</a>
                         </div>
                     </div>
                     <a onclick="location.href='/api/users/login-page'" class="nav-item nav-link">Login</a>
                 </div>
-                <a onclick="location.href='/test/search'" class="btn btn-primary py-2 px-4">Order</a>
+                <a onclick="location.href='/view/search'" class="btn btn-primary py-2 px-4">Order</a>
             </div>
         </nav>
+
         <div class="container-xxl py-5 bg-dark hero-header mb-5">
             <div class="container text-center my-5 pt-5 pb-4">
-
 
 
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Saerch Here!!</h1>
@@ -86,7 +86,7 @@
                         <li class="breadcrumb-item"><a href="#">Pages</a></li>
 
 
-                        <li class="breadcrumb-item text-white active" aria-current="page">Saerch</li>
+                        <li class="breadcrumb-item text-white active" aria-current="page">Search</li>
 
                     </ol>
                 </nav>
@@ -160,38 +160,18 @@
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h5 class="section-title ff-secondary text-center text-primary fw-normal">Search</h5>
                 <form id="search-form">
-                    <label for="search-keyword"></label><input type="text" id="search-keyword" placeholder="음식점 검색"
-                                                               class="form-control">
-                    <button type="submit" class="btn btn-primary">검색</button>
+                    <label for="query"></label>
+                    <input type="text" id="query" placeholder="음식점 검색" class="form-control">
                 </form>
             </div>
+            <button type="submit" onclick="execSearch()" class="btn btn-primary">검색</button>
 
             <div class="row g-4" id="search-results">
                 <!-- 검색 결과가 여기에 나열예정. -->
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item text-center rounded overflow-hidden">
-                        <div class="rounded-circle overflow-hidden m-4">
-                            <img class="img-fluid" src="/img/team-3.jpg" alt="">
-                        </div>
-                        <h5 class="mb-0">Full Name</h5>
-                        <small>Designation</small>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item text-center rounded overflow-hidden">
-                        <div class="rounded-circle overflow-hidden m-4">
-                            <img class="img-fluid" src="/img/team-4.jpg" alt="">
-                        </div>
-                        <h5 class="mb-0">Full Name</h5>
-                        <small>Designation</small>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!-- Team End -->
-
-
 
 
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -205,13 +185,6 @@
                     &copy; <a class="border-bottom" href="https://github.com/BangTtagGum">이준영</a>
                     &copy; <a class="border-bottom" href="https://github.com/LeeJiHun1">이지훈</a>
                     &copy; <a class="border-bottom" href="https://github.com/JeongJaeIk1207">정재익</a>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <div class="footer-menu">
-                        <a onclick="location.href='/'">Home</a>
-                        <a onclick="location.href='/test/search'">Order</a>
-                        <a onclick="location.href='/test/review'">Review</a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -237,6 +210,68 @@
 
 <!-- Template Javascript -->
 <script src="/js/main.js"></script>
+<script>
+    function execSearch() {
+        /**
+         * 검색어 input id: query
+         * 검색결과 목록: #search-result-box
+         * 검색결과 HTML 만드는 함수: addHTML
+         */
+            // 1. 검색창의 입력값을 가져온다.
+        let query = $('#query').val();
+        // 2. 검색창 입력값을 검사하고, 입력하지 않았을 경우 focus.
+        if (query == '') {
+            alert('검색어를 입력해주세요');
+            $('#query').focus();
+            return;
+        }
+        // 3. GET /api/search?query=${query} 요청
+        $.ajax({
+            type: 'GET',
+            url: `/api/restaurants/search?query=${query}`,
+            success: function (response) {
+                $('#search-results').empty();
+                console.log(response)
+                // 4. for 문마다 itemDto를 꺼내서 HTML 만들고 검색결과 목록에 붙이기!
+                for (let i = 0; i < response.length; i++) {
+                    let itemDto = response[i];
+                    let tempHtml = addHTML(itemDto);
+                    $('#search-results').append(tempHtml);
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+        })
+
+    }
+
+    function addHTML(itemDto) {
+        console.log(itemDto)
+        console.log(itemDto.menuList)
+        let imagesrc = itemDto.menuList[0].image
+        if (imagesrc == null) {
+            imagesrc = "https://th.bing.com/th/id/OIP.sUZBk1ASqCmCqNybi958vgHaHP?w=168&h=180&c=7&r=0&o=5&pid=1.7"
+        }
+        /**
+         * class="search-itemDto" 인 녀석에서
+         * image, title, lprice, addProduct 활용하기
+         * 참고) onclick='addProduct(${JSON.stringify(itemDto)})'
+         */
+        return `
+        <div class="search-itemDto" onclick="location.href='/view/restaurants/${itemDto.id}';">
+                <div class="search-itemDto-left">
+                    <img src="${imagesrc}" alt="">
+                </div>
+                <div class="search-itemDto-center">
+                    <div>${itemDto.name}</div>
+            </div>
+        </div>`
+        }
+</script>
+
 </body>
 
 </html>
