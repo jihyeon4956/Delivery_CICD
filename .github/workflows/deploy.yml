@@ -5,6 +5,7 @@ on:
     branches:
       - main
 
+
 env:
   AWS_REGION: ap-northeast-2
   S3_BUCKET_NAME: deliverycicd2
@@ -29,21 +30,6 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-
-    # # PEM 파일을 GitHub Action Workspace로 복사
-    # - name: Setup SSH Key
-    #   run: |
-    #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > dCICD.pem
-    #     chmod 600 dCICD.pem
-
-    
-    #   # 추가
-    # - name: Copy gradlew script to EC2
-    #   run: |
-    #     scp -i dCICD.pem ./gradlew ubuntu@13.125.33.250:/home/ubuntu/app/
-    #     ssh -i dCICD.pem ubuntu@13.125.33.250 "chmod +x /home/ubuntu/app/gradlew"
-    #   env:
-    #     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
 
    
     - name: Set up environment variables
